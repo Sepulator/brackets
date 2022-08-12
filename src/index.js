@@ -1,15 +1,21 @@
 module.exports = function check(str, bracketsConfig) {
 
-str = str.split('');
-for (let i = 0; i <= str.length; i++) {
-  bracketsConfig.map(value => {
-    if (str[i] === value[0] && str[i + 1] === value[1]) {
-      str.splice(i, 2);
-      i = i - 2;
-    }
-  });
-}
+  // const BRACKETS_PAIR = Object.fromEntries(bracketsConfig.map((value) => value.reverse()));
+  const BRACKETS_PAIR = {  ')': '(', ']': '[', '}': '{', '|': '|',
+  '2': '1', '4': '3', '6': '5', '7': '7', '8': '8' }
 
-return str.length === 0;
+  let stack = [];
 
+  for (let i = 0; i < str.length; i++) {
+    let currentSymbol = str[i];
+    let topElement = stack[stack.length - 1];
+
+    console.log(BRACKETS_PAIR[currentSymbol]);
+
+    if ((BRACKETS_PAIR[currentSymbol] === topElement) && (stack.length > 0) ) {
+      stack.pop();
+    } else { stack.push(currentSymbol); }
+
+  }
+    return stack.length === 0;
 }
